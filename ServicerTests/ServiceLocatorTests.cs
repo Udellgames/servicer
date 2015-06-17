@@ -225,7 +225,7 @@ namespace Tests
 
         [Test()]
         [ExpectedException(typeof(KeyNotFoundException))]
-        public void UnregisterTest_ItemNotFound_NoKey()
+        public void Unregister_TestItemNotFound_NoKey()
         {
             var expected = new List<string>()
                 {
@@ -237,7 +237,7 @@ namespace Tests
 
         [Test()]
         [ExpectedException(typeof(KeyNotFoundException))]
-        public void UnregisterTest_ItemNotFound_Keyed()
+        public void Unregister_TestItemNotFound_Keyed()
         {
             var expected = new List<string>()
                 {
@@ -248,7 +248,7 @@ namespace Tests
         }
 
         [Test()]
-        public void UnregisterTest_ReAddSameType_NoKey()
+        public void Unregister_TestReAddSameType_NoKey()
         {
             var expected = new List<string>()
                 {
@@ -263,7 +263,7 @@ namespace Tests
         }
 
         [Test()]
-        public void UnregisterTest_ReAddSameType_Keyed()
+        public void Unregister_TestReAddSameType_Keyed()
         {
             var expected = new List<string>()
                 {
@@ -278,7 +278,7 @@ namespace Tests
         }
 
         [Test()]
-        public void UnregisterTest_ReAddDifferentItem_NoKey()
+        public void Unregister_TestReAddDifferentItem_NoKey()
         {
             var expected = new List<string>()
             {
@@ -298,7 +298,7 @@ namespace Tests
         }
 
         [Test()]
-        public void UnregisterTest_ReAddDifferentItem_Keyed()
+        public void Unregister_TestReAddDifferentItem_Keyed()
         {
             var expected = new List<string>()
             {
