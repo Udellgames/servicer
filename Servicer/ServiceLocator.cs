@@ -232,7 +232,7 @@ public class ServiceLocator
         var type = typeof(T);
         var dictKey = new Tuple<Type, object>(type, key);
 
-        if (Instance.services.ContainsKey(dictKey))
+        if (!Instance.services.ContainsKey(dictKey))
         {
             throw new KeyNotFoundException(string.Format("Could not find a service of type {0} with key {1}", type, key));
         }
