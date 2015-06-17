@@ -14,11 +14,14 @@ namespace Tests
         {
             //We have to reset the service locator because static state is persisted between tests.
             ServiceLocator.Clear();
+            ServiceLocator.Explicit = false;
         }
 
         [Test()]
         public void GetService_TestSameType_NoKey()
         {
+            ServiceLocator.Explicit = true;
+
             var expected = new List<string>()
                 {
                     "pass"
@@ -40,6 +43,8 @@ namespace Tests
         [Test()]
         public void GetService_TestSameType_Keyed()
         {
+            ServiceLocator.Explicit = true;
+
             var expected = new List<string>()
                 {
                     "pass"
@@ -62,6 +67,8 @@ namespace Tests
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSameType_NoKey_ItemDoesNotExist()
         {
+            ServiceLocator.Explicit = true;
+
             var expected = new List<string>()
                 {
                     "pass"
@@ -82,6 +89,7 @@ namespace Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void Register_TestItemAlreadyExists_Unkeyed()
         {
+
             var expected = new List<string>()
                 {
                     "pass"
@@ -125,6 +133,8 @@ namespace Tests
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSameType_Keyed_ItemDoesNotExist()
         {
+            ServiceLocator.Explicit = true;
+
             var expected = new List<string>()
                 {
                     "pass"
@@ -139,6 +149,54 @@ namespace Tests
             ServiceLocator.Register(unexpected);
 
             var actual = ServiceLocator.GetService<List<string>>(2);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void GetService_TestSuperClass_Explicit_NoKey()
+        {
+            ServiceLocator.Explicit = true;
+
+            var expected = new List<string>()
+                {
+                    "pass"
+                };
+
+            var unexpected = new List<string>()
+                {
+                    "fail"
+                };
+
+            ServiceLocator.Register(expected);
+            ServiceLocator.Register(unexpected, 1);
+
+            var actual = ServiceLocator.GetService<IEnumerable<string>>();
+
+            Assert.That(actual, Is.SameAs(expected));
+        }
+
+        [Test()]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void GetService_TestSuperClass_Explicit_Keyed()
+        {
+            ServiceLocator.Explicit = true;
+
+            var expected = new List<string>()
+                {
+                    "pass"
+                };
+
+            var unexpected = new List<string>()
+                {
+                    "fail"
+                };
+
+            ServiceLocator.Register(expected, 1);
+            ServiceLocator.Register(unexpected);
+
+            var actual = ServiceLocator.GetService<IEnumerable<string>>(1);
+
+            Assert.That(actual, Is.SameAs(expected));
         }
 
         [Test()]
