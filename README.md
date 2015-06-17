@@ -1,4 +1,4 @@
-# Servicer
+# Servicer ![Servicer project build status](https://travis-ci.org/Udellgames/servicer.svg?branch=master)
 A simple type-safe, generic service locator.
 
 This repository is automatically built against the following versions of Mono:
