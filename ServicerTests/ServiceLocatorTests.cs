@@ -7,8 +7,6 @@ namespace Tests
     [TestFixture()]
     public class ServiceLocatorTests
     {
-        #region Public Methods
-
         [Test()]
         public void GetService_TestSameType_Keyed()
         {
@@ -373,7 +371,5 @@ namespace Tests
 
             Assert.Pass();
         }
-
-        #endregion Public Methods
     }
 }

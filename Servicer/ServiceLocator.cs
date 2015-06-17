@@ -6,10 +6,8 @@ using System.Linq;
 /// <summary>
 /// Simple service locator
 /// </summary>
-public class ServiceLocator
+public sealed class ServiceLocator
 {
-    #region Private Classes
-
     /// <summary>
     /// Simple .NET 3.5 Tuple class.
     /// </summary>
@@ -18,25 +16,15 @@ public class ServiceLocator
     [DebuggerDisplay("Item1: {Item1}, Item2: {Item2}")]
     private class Tuple<T, V>
     {
-        #region Public Properties
-
         public T Item1 { get; set; }
 
         public V Item2 { get; set; }
-
-        #endregion Public Properties
-
-        #region Public Constructors
 
         public Tuple(T item1, V item2)
         {
             Item1 = item1;
             Item2 = item2;
         }
-
-        #endregion Public Constructors
-
-        #region Public Methods
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -67,10 +55,6 @@ public class ServiceLocator
             }
         }
 
-        #endregion Public Methods
-
-        #region Private Methods
-
         /// <summary>
         /// Determines whether the first object is equal to the second object, including if they are both null.
         /// </summary>
@@ -81,27 +65,20 @@ public class ServiceLocator
         {
             return first == null ? second == null : first.Equals(second);
         }
-
-        #endregion Private Methods
     }
-
-    #endregion Private Classes
-
-    #region Private Fields
 
     /// <summary>
     /// The instance for the Singleton pattern.
     /// </summary>
-    private static ServiceLocator instance;
+    /// <remarks>
+    /// This isn't lazy, but it is thread-safe. Laziness is not necessary as this class is very light-weight initially.
+    /// </remarks>
+    private static readonly ServiceLocator instance = new ServiceLocator();
 
     /// <summary>
     /// The services
     /// </summary>
     private IDictionary<Tuple<Type, object>, object> services = new Dictionary<Tuple<Type, object>, object>();
-
-    #endregion Private Fields
-
-    #region Public Properties
 
     /// <summary>
     /// Gets or sets a value indicating whether this <see cref="ServiceLocator"/> is explicit.
@@ -116,25 +93,23 @@ public class ServiceLocator
     /// </value>
     public static bool Explicit { get; set; }
 
-    #endregion Public Properties
-
-    #region Private Properties
-
     private static ServiceLocator Instance
     {
         get
         {
-            if (instance == null)
-            {
-                instance = new ServiceLocator();
-            }
             return instance;
         }
     }
 
-    #endregion Private Properties
+    // Explicit static constructor to tell C# compiler
+    // not to mark type as beforefieldinit
+    static ServiceLocator()
+    {
+    }
 
-    #region Public Methods
+    private ServiceLocator()
+    {
+    }
 
     /// <summary>
     /// Clears this instance by removing all services.
@@ -167,24 +142,27 @@ public class ServiceLocator
         var type = typeof(T);
         var dictKey = new Tuple<Type, object>(type, key);
 
-        if (!Instance.services.ContainsKey(dictKey))
+        object returnValue;
+
+        if (Instance.services.TryGetValue(dictKey, out returnValue))
         {
-            if (!Explicit)
-            {
-                var subTypeKey = Instance.services.Keys.FirstOrDefault(x =>
-                    (key == null ? x.Item2 == null : key.Equals(x.Item2))
-                    && type.IsAssignableFrom(x.Item1));
-
-                if (subTypeKey != null)
-                {
-                    return (T)Instance.services[subTypeKey];
-                }
-            }
-
-            throw new KeyNotFoundException(string.Format("Cannot get a value for type: {0} and key: {1}. That type has not been registered yet.", type, key));
+            return (T)returnValue;
         }
 
-        return (T)Instance.services[dictKey];
+        if (!Explicit)
+        {
+            var subTypeKey = Instance.services.Keys.FirstOrDefault(
+                x =>
+                    (key == null ? x.Item2 == null : key.Equals(x.Item2)) &&
+                    type.IsAssignableFrom(x.Item1));
+
+            if (subTypeKey != null)
+            {
+                return (T)Instance.services[subTypeKey];
+            }
+        }
+
+        throw new KeyNotFoundException(string.Format("Cannot get a value for type: {0} and key: {1}. That type has not been registered yet.", type, key));
     }
 
     /// <summary>
@@ -242,13 +220,9 @@ public class ServiceLocator
         var type = typeof(T);
         var dictKey = new Tuple<Type, object>(type, key);
 
-        if (!Instance.services.ContainsKey(dictKey))
+        if (!Instance.services.Remove(dictKey))
         {
             throw new KeyNotFoundException(string.Format("Could not find a service of type {0} with key {1}", type, key));
         }
-
-        Instance.services.Remove(dictKey);
     }
-
-    #endregion Public Methods
 }
