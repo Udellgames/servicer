@@ -240,5 +240,13 @@ public class ServiceLocator
         Instance.services.Remove(dictKey);
     }
 
+    /// <summary>
+    /// Clears this instance by removing all services.
+    /// </summary>
+    public static void Clear()
+    {
+        ServiceLocator.Instance.services.Clear();
+    }
+
     #endregion Public Methods
 }
