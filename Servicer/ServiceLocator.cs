@@ -163,7 +163,7 @@ public class ServiceLocator
         {
             if (!Explicit)
             {
-                var subTypeKey = Instance.services.Keys.FirstOrDefault(x => x.Item2 == key && type.IsAssignableFrom(x.Item1));
+                var subTypeKey = Instance.services.Keys.FirstOrDefault(x => x.Item2.Equals(key) && type.IsAssignableFrom(x.Item1));
 
                 if (subTypeKey != null)
                 {
