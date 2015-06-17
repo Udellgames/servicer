@@ -314,7 +314,7 @@ namespace Tests
             ServiceLocator.Unregister(unexpected, 0);
             ServiceLocator.Register(expected, 0);
 
-            Assert.That(ServiceLocator.GetService<List<string>>(), Is.SameAs(expected));
+            Assert.That(ServiceLocator.GetService<List<string>>(0), Is.SameAs(expected));
         }
     }
 }
