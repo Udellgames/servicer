@@ -141,7 +141,7 @@ public class ServiceLocator
     /// </summary>
     /// <typeparam name="T">The type of service to get.</typeparam>
     /// <returns>The instance of type T registered with the Service Locator.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when the Service Locator cannot find an un-keyed service of the requested type and Explicit is true, or when the Service Locator cannot find an un-keyed service of the requested type or any type that can be assigned to the requested type and Explicit is false.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when the Service Locator cannot find an un-keyed service of the requested type and Explicit is true, or when the Service Locator cannot find an un-keyed service of the requested type or any type that can be assigned to the requested type and Explicit is false.</exception>
     public static T GetService<T>() where T : class
     {
         return GetService<T>(null);
@@ -153,7 +153,7 @@ public class ServiceLocator
     /// <typeparam name="T">The type of service to get.</typeparam>
     /// <param name="key">The key to filter multiple services of the same type by.</param>
     /// <returns>The instance of type T registered with the provided key in the Service Locator.</returns>
-    /// <exception cref="System.InvalidOperationException">Thrown when the Service Locator cannot find an a service of the requested type with a matching key and Explicit is true, or when the Service Locator cannot find a service of the requested type or any type that can be assigned to the requested type with the matching key and Explicit is false.</exception>
+    /// <exception cref="System.KeyNotFoundException">Thrown when the Service Locator cannot find an a service of the requested type with a matching key and Explicit is true, or when the Service Locator cannot find a service of the requested type or any type that can be assigned to the requested type with the matching key and Explicit is false.</exception>
     public static T GetService<T>(object key) where T : class
     {
         var type = typeof(T);
@@ -163,7 +163,9 @@ public class ServiceLocator
         {
             if (!Explicit)
             {
-                var subTypeKey = Instance.services.Keys.FirstOrDefault(x => x.Item2.Equals(key) && type.IsAssignableFrom(x.Item1));
+                var subTypeKey = Instance.services.Keys.FirstOrDefault(x =>
+                    (key == null ? x.Item2 == null : key.Equals(x.Item2))
+                    && type.IsAssignableFrom(x.Item1));
 
                 if (subTypeKey != null)
                 {
@@ -171,7 +173,7 @@ public class ServiceLocator
                 }
             }
 
-            throw new InvalidOperationException(string.Format("Cannot get a value for type: {0} and key: {1}. That type has not been registered yet.", type, key));
+            throw new KeyNotFoundException(string.Format("Cannot get a value for type: {0} and key: {1}. That type has not been registered yet.", type, key));
         }
 
         return (T)Instance.services[dictKey];
