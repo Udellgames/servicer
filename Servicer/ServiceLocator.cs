@@ -137,6 +137,14 @@ public class ServiceLocator
     #region Public Methods
 
     /// <summary>
+    /// Clears this instance by removing all services.
+    /// </summary>
+    public static void Clear()
+    {
+        ServiceLocator.Instance.services.Clear();
+    }
+
+    /// <summary>
     /// Gets a service of type T.
     /// </summary>
     /// <typeparam name="T">The type of service to get.</typeparam>
@@ -240,14 +248,6 @@ public class ServiceLocator
         }
 
         Instance.services.Remove(dictKey);
-    }
-
-    /// <summary>
-    /// Clears this instance by removing all services.
-    /// </summary>
-    public static void Clear()
-    {
-        ServiceLocator.Instance.services.Clear();
     }
 
     #endregion Public Methods
