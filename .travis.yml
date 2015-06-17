@@ -1,5 +1,9 @@
 language: csharp
 solution: Servicer.sln
+mono:
+  - latest
+  - 2.10.8
+  - 2.0.0
 script:
   - xbuild /p:Configuration=Release Servicer.sln
   - mono ./packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./ServicerTests/bin/Release/ServicerTests.dll

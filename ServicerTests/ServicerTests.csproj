@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Servicer\Servicer.csproj">
-      <Project>{5BBC77F2-4FF9-4A17-BC17-882BE627263C}</Project>
+      <Project>{5d17e1cb-6368-40f3-b8c9-58b66a99be09}</Project>
       <Name>Servicer</Name>
     </ProjectReference>
   </ItemGroup>
