@@ -31,7 +31,7 @@ If you need to remove a service (for example, to replace it with something else)
 
 ## Keyed, Unkeyed and Explicit
 
-If you need to register more than one service of the same type, you can provide a key. The key can be any object, but **be warned: the ServiceLocator will use the key's implementation of Equals and GetHashCode to find your service. Overridden implementations could cause the Service Locator to fail.**
+If you need to register more than one service of the same type, you can provide a key. The key can be any object, but be warned: the ServiceLocator will use the key's implementation of Equals and GetHashCode to find your service. **Overridden implementations could cause the Service Locator to fail.**
 
 If you provide a key, you must use that key (or any key that matches the implementation of Equals on the key's type) when getting the service. It is perfectly acceptable to define a keyed service and an unkeyed service of the same type, and they will be treated as different entries in the Service Locator.
 
