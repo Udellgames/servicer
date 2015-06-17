@@ -32,8 +32,6 @@ namespace Tests
             ServiceLocator.Register(expected);
             ServiceLocator.Register(unexpected, 1);
 
-            ServiceLocator.Register(expected);
-
             var actual = ServiceLocator.GetService<List<string>>();
 
             Assert.That(actual, Is.SameAs(expected));
@@ -76,8 +74,6 @@ namespace Tests
 
             ServiceLocator.Register(expected, 2);
             ServiceLocator.Register(unexpected, 1);
-
-            ServiceLocator.Register(expected);
 
             var actual = ServiceLocator.GetService<List<string>>();
         }
@@ -161,8 +157,6 @@ namespace Tests
             ServiceLocator.Register(expected);
             ServiceLocator.Register(unexpected, 1);
 
-            ServiceLocator.Register(expected);
-
             var actual = ServiceLocator.GetService<IEnumerable<string>>();
 
             Assert.That(actual, Is.SameAs(expected));
@@ -205,8 +199,6 @@ namespace Tests
 
             ServiceLocator.Register(expected, 2);
             ServiceLocator.Register(unexpected, 1);
-
-            ServiceLocator.Register(expected);
 
             var actual = ServiceLocator.GetService<IEnumerable<string>>();
         }
