@@ -9,21 +9,43 @@ using System.Linq;
 public sealed class ServiceLocator
 {
     /// <summary>
-    /// Simple .NET 3.5 Tuple class.
+    /// Simple .NET 3.5 immutable Tuple class.
     /// </summary>
     /// <typeparam name="T">The type of the first item.</typeparam>
     /// <typeparam name="V">The type of the second item.</typeparam>
     [DebuggerDisplay("Item1: {Item1}, Item2: {Item2}")]
-    private class Tuple<T, V>
+    private sealed class Tuple<T, V>
     {
-        public T Item1 { get; set; }
+        private readonly T item1;
 
-        public V Item2 { get; set; }
+        /// <summary>
+        /// Gets or sets the second item.
+        /// </summary>
+        /// <value>
+        /// The second item.
+        /// </value>
+        private readonly V item2;
+
+        /// <summary>
+        /// Gets or sets the first item.
+        /// </summary>
+        /// <value>
+        /// The first item.
+        /// </value>
+        public T Item1
+        {
+            get { return item1; }
+        }
+
+        public V Item2
+        {
+            get { return item2; }
+        }
 
         public Tuple(T item1, V item2)
         {
-            Item1 = item1;
-            Item2 = item2;
+            this.item1 = item1;
+            this.item2 = item2;
         }
 
         /// <summary>
