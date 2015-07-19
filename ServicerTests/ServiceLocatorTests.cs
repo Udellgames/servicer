@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class ServiceLocatorTests
     {
-        [Test()]
+        [Test]
         public void GetService_TestSameType_Keyed()
         {
             ServiceLocator.Explicit = true;
@@ -30,7 +30,7 @@ namespace Tests
             Assert.That(actual, Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSameType_Keyed_ItemDoesNotExist()
         {
@@ -52,7 +52,7 @@ namespace Tests
             var actual = ServiceLocator.GetService<List<string>>(2);
         }
 
-        [Test()]
+        [Test]
         public void GetService_TestSameType_NoKey()
         {
             ServiceLocator.Explicit = true;
@@ -75,7 +75,7 @@ namespace Tests
             Assert.That(actual, Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSameType_NoKey_ItemDoesNotExist()
         {
@@ -97,7 +97,7 @@ namespace Tests
             var actual = ServiceLocator.GetService<List<string>>();
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSuperClass_Explicit_Keyed()
         {
@@ -121,7 +121,7 @@ namespace Tests
             Assert.That(actual, Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSuperClass_Explicit_NoKey()
         {
@@ -145,7 +145,7 @@ namespace Tests
             Assert.That(actual, Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         public void GetService_TestSuperClass_Keyed()
         {
             var expected = new List<string>()
@@ -166,7 +166,7 @@ namespace Tests
             Assert.That(actual, Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSuperClass_KeyedItemDoesNotExist()
         {
@@ -186,7 +186,7 @@ namespace Tests
             var actual = ServiceLocator.GetService<IEnumerable<string>>(1);
         }
 
-        [Test()]
+        [Test]
         public void GetService_TestSuperClass_NoKey()
         {
             var expected = new List<string>()
@@ -207,7 +207,7 @@ namespace Tests
             Assert.That(actual, Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void GetService_TestSuperClass_NoKey_UnkeyedItemDoesNotExist()
         {
@@ -278,7 +278,7 @@ namespace Tests
             ServiceLocator.Explicit = false;
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void Unregister_TestItemNotFound_Keyed()
         {
@@ -290,7 +290,7 @@ namespace Tests
             ServiceLocator.Unregister(expected, 2);
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void Unregister_TestItemNotFound_NoKey()
         {
@@ -302,7 +302,7 @@ namespace Tests
             ServiceLocator.Unregister(expected);
         }
 
-        [Test()]
+        [Test]
         public void Unregister_TestReAddDifferentItem_Keyed()
         {
             var expected = new List<string>()
@@ -322,7 +322,7 @@ namespace Tests
             Assert.That(ServiceLocator.GetService<List<string>>(0), Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         public void Unregister_TestReAddDifferentItem_NoKey()
         {
             var expected = new List<string>()
@@ -342,7 +342,7 @@ namespace Tests
             Assert.That(ServiceLocator.GetService<List<string>>(), Is.SameAs(expected));
         }
 
-        [Test()]
+        [Test]
         public void Unregister_TestReAddSameType_Keyed()
         {
             var expected = new List<string>()
@@ -357,7 +357,7 @@ namespace Tests
             Assert.Pass();
         }
 
-        [Test()]
+        [Test]
         public void Unregister_TestReAddSameType_NoKey()
         {
             var expected = new List<string>()
