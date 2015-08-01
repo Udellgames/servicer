@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<package>
+    <metadata>
+        <id>Servicer</id>
+        <version>$version$</version>
+        <title>Service Location Made Simple</title>
+        <authors>Udell Games, Nicholas Udell</authors>
+        <owners>Nicholas Udell</owners>
+        <licenseUrl>https://github.com/Udellgames/Servicer/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/Udellgames/Servicer</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/Udellgames/Servicer/master/nugeticon.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A simple type-safe, generic service locator, now with promises support.</description>
+        <releaseNotes></releaseNotes>
+        <copyright>Copyright &#x00A9; Udell Games. All rights reserved.</copyright>
+        <tags>service-locator dependency generic promise</tags>
+    </metadata>
+    <files>
+        <file src="SafeEventHandlers\bin\$configuration$\Servicer.dll" target="lib\net35\" />
+    </files>
+</package>
