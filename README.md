@@ -1,6 +1,8 @@
 # Service Location Made Simple ![Servicer project build status](https://travis-ci.org/Udellgames/servicer.svg?branch=master) [![Servicer NuGet package version](https://img.shields.io/nuget/v/Servicer.svg)](https://www.nuget.org/packages/Servicer/)
 A simple type-safe, generic service locator, now with promises support.
 
+Now available as a [NuGet Package](https://www.nuget.org/packages/Servicer/)!
+
 This repository is automatically built against the following versions of Mono:
   - beta
   - latest
