@@ -1,12 +1,258 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-
-namespace Tests
+﻿namespace Servicer.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using NUnit.Framework;
+
     [TestFixture]
     public class ServiceLocatorTests
     {
+        [Test]
+        public void GetPromise_TestSameType_TestAlreadyFulfilled_Keyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            ServiceLocator.Register(expected, 1);
+
+            var promise = ServiceLocator.GetPromisedService<List<string>>(1);
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) => doneFired = true;
+            promise.Finally += (o, e) => finallyFired = true;
+
+            var actual = promise.Require();
+
+            Assert.That(actual, Is.SameAs(expected));
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        public void GetPromise_TestSameType_TestAlreadyFulfilled_Unkeyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            ServiceLocator.Register(expected);
+
+            var promise = ServiceLocator.GetPromisedService<List<string>>();
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) => doneFired = true;
+            promise.Finally += (o, e) => finallyFired = true;
+
+            var actual = promise.Require();
+
+            Assert.That(actual, Is.SameAs(expected));
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        public void GetPromise_TestSameType_TestNotYetFulfilled_Keyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            var promise = ServiceLocator.GetPromisedService<List<string>>(1);
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) =>
+            {
+                Assert.That(e.Value, Is.SameAs(expected));
+                doneFired = true;
+            };
+
+            promise.Finally += (o, e) => finallyFired = true;
+
+            ServiceLocator.Register(expected, 1);
+
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        public void GetPromise_TestSameType_TestNotYetFulfilled_Unkeyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            var promise = ServiceLocator.GetPromisedService<List<string>>();
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) =>
+            {
+                Assert.That(e.Value, Is.SameAs(expected));
+                doneFired = true;
+            };
+
+            promise.Finally += (o, e) => finallyFired = true;
+
+            ServiceLocator.Register(expected);
+
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        [ExpectedException(typeof(PromiseUnfulfilledException))]
+        public void GetPromise_TestSameType_TestRequireWhenKeyUnfulfilled_Keyed_ThrowsException()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            var promise = ServiceLocator.GetPromisedService<List<string>>(1);
+            ServiceLocator.Register(expected, 2);
+            var actual = promise.Require();
+        }
+
+        [Test]
+        [ExpectedException(typeof(PromiseUnfulfilledException))]
+        public void GetPromise_TestSameType_TestRequireWhenUnfulfilled_Keyed_ThrowsException()
+        {
+            var promise = ServiceLocator.GetPromisedService<List<string>>(1);
+
+            var actual = promise.Require();
+        }
+
+        [Test]
+        [ExpectedException(typeof(PromiseUnfulfilledException))]
+        public void GetPromise_TestSameType_TestRequireWhenUnfulfilled_ThrowsException()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            var promise = ServiceLocator.GetPromisedService<List<string>>();
+
+            var actual = promise.Require();
+        }
+
+        [Test]
+        public void GetPromise_TestSuperClass_TestAlreadyFulfilled_Keyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            ServiceLocator.Register(expected, 1);
+
+            var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>(1);
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) => doneFired = true;
+            promise.Finally += (o, e) => finallyFired = true;
+
+            var actual = promise.Require();
+
+            Assert.That(actual.Single(), Is.EqualTo(expected.Single()));
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        public void GetPromise_TestSuperClass_TestAlreadyFulfilled_Unkeyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            ServiceLocator.Register(expected);
+
+            var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>();
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) => doneFired = true;
+            promise.Finally += (o, e) => finallyFired = true;
+
+            var actual = promise.Require();
+
+            Assert.That(actual.Single(), Is.EqualTo(expected.Single()));
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        public void GetPromise_TestSuperClass_TestNotYetFulfilled_Keyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>(1);
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) =>
+            {
+                Assert.That(e.Value.First(), Is.EqualTo(expected.First()));
+                doneFired = true;
+            };
+
+            promise.Finally += (o, e) => finallyFired = true;
+
+            ServiceLocator.Register(expected, 1);
+
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
+        [Test]
+        public void GetPromise_TestSuperClass_TestNotYetFulfilled_Unkeyed()
+        {
+            var expected = new List<string>()
+            {
+                "foo"
+            };
+
+            var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>();
+
+            var doneFired = false;
+            var finallyFired = false;
+
+            promise.Done += (o, e) =>
+            {
+                Assert.That(e.Value.First(), Is.EqualTo(expected.First()));
+                doneFired = true;
+            };
+
+            promise.Finally += (o, e) => finallyFired = true;
+
+            ServiceLocator.Register(expected);
+
+            Assert.That(doneFired, Is.True);
+            Assert.That(finallyFired, Is.True);
+        }
+
         [Test]
         public void GetService_TestSameType_Keyed()
         {
@@ -273,7 +519,7 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-            //We have to reset the service locator because static state is persisted between tests.
+            // We have to reset the service locator because static state is persisted between tests.
             ServiceLocator.Clear();
             ServiceLocator.Explicit = false;
         }
