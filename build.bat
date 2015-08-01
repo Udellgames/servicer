@@ -15,7 +15,8 @@ if "%nuget%" == "" (
 )
 
 REM Package restore
-call %nuget% restore .nuget\packages.config -OutputDirectory %cd%\packages -NonInteractive
+call %nuget% restore Servicer\packages.config -OutputDirectory %cd%\packages -NonInteractive
+call %nuget% restore ServicerTests\packages.config -OutputDirectory %cd%\packages -NonInteractive
 
 REM Build
 %WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild Servicer.sln /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=diag /nr:false
