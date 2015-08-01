@@ -16,6 +16,6 @@
         <tags>service-locator dependency generic promise</tags>
     </metadata>
     <files>
-        <file src="SafeEventHandlers\bin\$configuration$\Servicer.dll" target="lib\net35\" />
+        <file src="Servicer\bin\$configuration$\Servicer.dll" target="lib\net35\" />
     </files>
 </package>
