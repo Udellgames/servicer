@@ -21,16 +21,13 @@
             var promise = ServiceLocator.GetPromisedService<List<string>>(1);
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) => doneFired = true;
-            promise.Finally += (o, e) => finallyFired = true;
 
             var actual = promise.Require();
 
             Assert.That(actual, Is.SameAs(expected));
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -46,16 +43,13 @@
             var promise = ServiceLocator.GetPromisedService<List<string>>();
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) => doneFired = true;
-            promise.Finally += (o, e) => finallyFired = true;
 
             var actual = promise.Require();
 
             Assert.That(actual, Is.SameAs(expected));
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -69,7 +63,6 @@
             var promise = ServiceLocator.GetPromisedService<List<string>>(1);
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) =>
             {
@@ -77,12 +70,9 @@
                 doneFired = true;
             };
 
-            promise.Finally += (o, e) => finallyFired = true;
-
             ServiceLocator.Register(expected, 1);
 
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -96,7 +86,6 @@
             var promise = ServiceLocator.GetPromisedService<List<string>>();
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) =>
             {
@@ -104,12 +93,9 @@
                 doneFired = true;
             };
 
-            promise.Finally += (o, e) => finallyFired = true;
-
             ServiceLocator.Register(expected);
 
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -162,16 +148,13 @@
             var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>(1);
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) => doneFired = true;
-            promise.Finally += (o, e) => finallyFired = true;
 
             var actual = promise.Require();
 
             Assert.That(actual.Single(), Is.EqualTo(expected.Single()));
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -187,16 +170,13 @@
             var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>();
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) => doneFired = true;
-            promise.Finally += (o, e) => finallyFired = true;
 
             var actual = promise.Require();
 
             Assert.That(actual.Single(), Is.EqualTo(expected.Single()));
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -210,7 +190,6 @@
             var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>(1);
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) =>
             {
@@ -218,12 +197,9 @@
                 doneFired = true;
             };
 
-            promise.Finally += (o, e) => finallyFired = true;
-
             ServiceLocator.Register(expected, 1);
 
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
@@ -237,7 +213,6 @@
             var promise = ServiceLocator.GetPromisedService<IEnumerable<string>>();
 
             var doneFired = false;
-            var finallyFired = false;
 
             promise.Done += (o, e) =>
             {
@@ -245,12 +220,9 @@
                 doneFired = true;
             };
 
-            promise.Finally += (o, e) => finallyFired = true;
-
             ServiceLocator.Register(expected);
 
             Assert.That(doneFired, Is.True);
-            Assert.That(finallyFired, Is.True);
         }
 
         [Test]
