@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionEventArgs.cs" />
     <Compile Include="IPromise.cs" />
     <Compile Include="PromiseEventArgs.cs" />
     <Compile Include="PromiseUnfulfilledException.cs" />

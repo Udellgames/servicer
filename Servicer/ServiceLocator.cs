@@ -68,8 +68,8 @@
         /// </summary>
         public static void Clear()
         {
-            ServiceLocator.Instance.services.Clear();
-            ServiceLocator.Instance.promises.Clear();
+            Instance.services.Clear();
+            Instance.promises.Clear();
         }
 
         /// <summary>
@@ -285,8 +285,6 @@
         /// <typeparam name="T">The type of sevice.</typeparam>
         private sealed class Promise<T> : IPromise<T>, IPromise where T : class
         {
-            private Exception error;
-
             private object eventLock = new object();
             private T fulfilledValue;
 
@@ -323,95 +321,9 @@
             }
 
             /// <summary>
-            /// Occurs when promise fulfillment has failed.
-            /// </summary>
-            /// <remarks>
-            /// If the promise has already failed, any event handlers attached to this instance will immediately be fired at the point of attachment.
-            /// </remarks>
-            public event EventHandler<ExceptionEventArgs> Failed
-            {
-                add
-                {
-                    lock (eventLock)
-                    {
-                        if (error == null)
-                        {
-                            FailedInternalEvent += value;
-                        }
-                        else
-                        {
-                            value.Fire(this, new ExceptionEventArgs(error));
-                        }
-                    }
-                }
-
-                remove
-                {
-                    lock (eventLock)
-                    {
-                        FailedInternalEvent -= value;
-                    }
-                }
-            }
-
-            /// <summary>
-            /// Occurs when the promise has been fulfilled, or has failed.
-            /// </summary>
-            /// <remarks>
-            /// If the promise has already been fulfilled or failed, any event handlers attached to this instance will immediately be fired at the point of attachment.
-            /// </remarks>
-            public event EventHandler Finally
-            {
-                add
-                {
-                    lock (eventLock)
-                    {
-                        if (fulfilledValue == null && error == null)
-                        {
-                            FinallyInternalEvent += value;
-                        }
-                        else
-                        {
-                            value.Fire(this, EventArgs.Empty);
-                        }
-                    }
-                }
-
-                remove
-                {
-                    lock (eventLock)
-                    {
-                        FinallyInternalEvent -= value;
-                    }
-                }
-            }
-
-            /// <summary>
             /// Occurs when the promise has been fulfilled.
             /// </summary>
             private event EventHandler<PromiseFulfilledEventArgs<T>> DoneInternalEvent;
-
-            /// <summary>
-            /// Occurs when the promise has failed.
-            /// </summary>
-            private event EventHandler<ExceptionEventArgs> FailedInternalEvent;
-
-            /// <summary>
-            /// Occurs when the promise has been fulfilled, or has failed.
-            /// </summary>
-            private event EventHandler FinallyInternalEvent;
-
-            /// <summary>
-            /// Fails this promise with the specified error.
-            /// </summary>
-            /// <param name="error">The error.</param>
-            public void Fail(Exception error)
-            {
-                this.error = error;
-
-                FailedInternalEvent.Fire(this, new ExceptionEventArgs(error));
-                FireFinally();
-            }
 
             /// <summary>
             /// Fulfills this promise with the specified value.
@@ -421,7 +333,6 @@
             {
                 fulfilledValue = value;
                 DoneInternalEvent.Fire(this, new PromiseFulfilledEventArgs<T>(value));
-                FireFinally();
             }
 
             /// <summary>
@@ -439,14 +350,6 @@
                 }
 
                 throw new PromiseUnfulfilledException();
-            }
-
-            /// <summary>
-            /// Fires the finally internal event.
-            /// </summary>
-            private void FireFinally()
-            {
-                FinallyInternalEvent.Fire(this, EventArgs.Empty);
             }
         }
 
