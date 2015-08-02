@@ -520,11 +520,11 @@
             /// <returns>
             /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
             /// </returns>
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Potential Code Quality Issues", "RECS0017:Possible compare of value type with 'null'", Justification = "We allow a generic comparison with null here, because .GetHashCode still works fine on default values.")]
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    // Allow a generic comparison with null here, because .GetHashCode is fine on default values.
                     var item1HashCode = Item1 == null ? 0 : Item1.GetHashCode();
                     var item2HashCode = Item2 == null ? 0 : Item2.GetHashCode();
                     return item1HashCode + item2HashCode;
