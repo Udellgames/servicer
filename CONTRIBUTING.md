@@ -7,7 +7,7 @@ The basic rules of contributing to this project are:
 1. Make the commits logical, simple and concrete
 2. Cover your changes with unit tests.
 3. Run all of the unit tests.
-4. Either run any included VS2015 analysers or StyleCop and FxCop combined to enforce coding style.
+4. Either run any included VS2015 analysers or StyleCop and FxCop combined to check coding style.
 
 ##Getting started
 Thought of something that would be a neat addition to the project? Found a bug you want to fix? Either way, the first step is always the same, branch the repo. Most of the time you'll want to branch from master, so do that. Give your branch a sensible name, and start committing to it. Ensure your commits are sensible, have reasonable messages, and don't encapsulate too many changes at once.
