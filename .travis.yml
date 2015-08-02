@@ -3,8 +3,6 @@ solution: Servicer.sln
 mono:
   - beta
   - latest
-  - 3.10.0
-  - 3.8.0
 script:
   - xbuild /p:Configuration=Release Servicer.sln
   - mono ./packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./ServicerTests/bin/Release/ServicerTests.dll
