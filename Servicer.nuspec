@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <package>
     <metadata>
-        <dependencies> 
+        <dependencies>
             <group targetFramework="net35">
                 <dependency id="SafeEventFiring" version="1.0.0" />
             </group>
@@ -15,12 +15,13 @@
         <projectUrl>https://github.com/Udellgames/Servicer</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/Udellgames/Servicer/master/nugeticon.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>A simple type-safe, generic service locator, now with promises support.</description>
+        <description>A simple type-safe, generic service locator, now with promises and TPL support.</description>
         <releaseNotes></releaseNotes>
         <copyright>Copyright &#x00A9; Udell Games. All rights reserved.</copyright>
-        <tags>service-locator dependency generic promise</tags>
+        <tags>service-locator dependency generic promise TPL task async</tags>
     </metadata>
     <files>
         <file src="Servicer\bin\$configuration$\Servicer.dll" target="lib\net35\" />
+        <file src="Servicer.Net4\bin\$configuration$\Servicer.Net4.dll" target="lib\net4\" />
     </files>
 </package>

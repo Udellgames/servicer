@@ -25,5 +25,6 @@ REM Package
 mkdir Build
 mkdir Build\lib
 mkdir Build\lib\net35
+mkdir Build\lib\net4
 
 %nuget% pack "Servicer.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version %version% -p Configuration="%config%"
