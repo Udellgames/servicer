@@ -24,5 +24,6 @@
     <files>
         <file src="Servicer\bin\$configuration$\Servicer.dll" target="lib\net35\" />
         <file src="Servicer.Net4\bin\$configuration$\Servicer.Net4.dll" target="lib\net4\" />
+        <file src="Servicer.Net45\bin\$configuration$\Servicer.Net45.dll" target="lib\net45\" />
     </files>
 </package>
