@@ -19,6 +19,7 @@
         <releaseNotes></releaseNotes>
         <copyright>Copyright &#x00A9; Udell Games. All rights reserved.</copyright>
         <tags>service-locator dependency generic promise TPL task async</tags>
+        <frameworkAssembly assemblyName="System.Threading.Tasks" targetFramework="net40" />
     </metadata>
     <files>
         <file src="Servicer\bin\$configuration$\Servicer.dll" target="lib\net35\" />
